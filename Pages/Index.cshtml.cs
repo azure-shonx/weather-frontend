@@ -32,7 +32,6 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnPost(int zipcode)
    {
-        Console.WriteLine("Got zipcode in Post!");
         return RedirectToPage("./Index", new {zipcode = zipcode});
     }
     public WeatherForecast GetWeather(int zipcode)
@@ -46,7 +45,7 @@ public class IndexModel : PageModel
     {
         WeatherForecast weather;
         using (var httpClient = new HttpClient()) {              
-            using (HttpResponseMessage response = await httpClient.GetAsync("https://weatherprovider.thankfulplant-b33b4202.eastus.azurecontainerapps.io/" + zipcode))
+            using (HttpResponseMessage response = await httpClient.GetAsync("https://localhost:8000/" + zipcode))
             {                   
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 weather = JsonConvert.DeserializeObject<WeatherForecast>(apiResponse);                   
