@@ -6,13 +6,16 @@
 <h1> Weather Lookup!</h1>
 
 @{
-    if(Model.Forecast == null) {
+    if (Model.Forecast == null)
+    {
         <form method="post">
             <label for="zipcode">Zipode:</label>
-            <input type="int", id="zipcode" name="zipcode"><br><br>
-            <input type="submit", value="Submit">
+            <input type="int" , id="zipcode" name="zipcode"><br><br>
+            <input type="submit" , value="Submit">
         </form>
-    } else {
+    }
+    else
+    {
         <p> The weather is currently: @Model.Forecast.summary</p>
     }
 }

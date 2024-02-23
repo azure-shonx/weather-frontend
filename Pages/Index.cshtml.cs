@@ -6,7 +6,7 @@ namespace weather_consumer.Pages;
 
 public class IndexModel : PageModel
 {
-    public WeatherForecast Forecast { get; set;}
+    public WeatherForecast Forecast { get; set; }
     private readonly ILogger<IndexModel> _logger;
 
     public IndexModel(ILogger<IndexModel> logger)
@@ -14,25 +14,28 @@ public class IndexModel : PageModel
         _logger = logger;
     }
 
-    
+
     public void OnGet(string? zipcode)
     {
-        if(zipcode is null) 
+        if (zipcode is null)
         {
             return;
         }
         int iZip;
-        try {
+        try
+        {
             iZip = Int32.Parse(zipcode);
-        } catch (FormatException e) {
+        }
+        catch (FormatException e)
+        {
             return;
         }
         Forecast = GetWeather(iZip);
     }
 
     public async Task<IActionResult> OnPost(int zipcode)
-   {
-        return RedirectToPage("./Index", new {zipcode = zipcode});
+    {
+        return RedirectToPage("./Index", new { zipcode = zipcode });
     }
     public WeatherForecast GetWeather(int zipcode)
     {
@@ -40,19 +43,20 @@ public class IndexModel : PageModel
     }
 
 
-    
+
     async Task<JsonResult> OnGetWeather(int zipcode)
     {
         WeatherForecast weather;
-        using (var httpClient = new HttpClient()) {              
+        using (var httpClient = new HttpClient())
+        {
             using (HttpResponseMessage response = await httpClient.GetAsync("https://localhost:8000/" + zipcode))
-            {                   
+            {
                 string apiResponse = await response.Content.ReadAsStringAsync();
-                weather = JsonConvert.DeserializeObject<WeatherForecast>(apiResponse);                   
+                weather = JsonConvert.DeserializeObject<WeatherForecast>(apiResponse);
             }
         }
         return new JsonResult(weather);
     }
 
-    public record WeatherForecast(int zipcode, int temperature, string summary, bool isRainy) {}
+    public record WeatherForecast(int zipcode, int temperature, string summary, bool isRainy) { }
 }
