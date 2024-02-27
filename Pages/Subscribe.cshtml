@@ -1,5 +1,5 @@
 ﻿@page
-@model IndexModel
+@model SubscribeModel
 
 
 
@@ -10,10 +10,9 @@
     <input type="email" , id="email" name="email"><br><br>
     <input type="submit" , value="Submit">
 </form>
-@*
+
 @{
-if(TODO: REPLACE ME) {
-<p> The weather is currently: @Model.Forecast.summary</p>
+if(@Model.email is not null) {
+    <p> Registered email @Model.email !</p>
 }
 }
-*@
