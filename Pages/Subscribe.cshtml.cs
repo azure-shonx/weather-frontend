@@ -16,20 +16,13 @@ public class SubscribeModel : SharedEmailPage
         _logger = logger;
     }
 
-    public async void OnPost(string? email)
+    public async void OnPost(string email)
     {
         if (email is null)
         {
             return;
         }
         this.email = email;
-        RegisterEmail(email);
+        SaveEmail(new Email(email));
     }
-    public async void RegisterEmail(string? email)
-    {
-        var emails = GetEmails();
-        emails.Add(email);
-        SaveEmails(emails);
-    }
-
 }

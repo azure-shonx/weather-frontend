@@ -22,17 +22,8 @@ public class UnsubscribeModel : SharedEmailPage
         {
             return;
         }
-        if(RemoveEmail(email))
-            this.email = email;
+        RemoveEmail(new Email(email));
     }
-    public bool RemoveEmail(string? email)
-    {
-        var emails = GetEmails();
-        bool removed = emails.Remove(email);
-        if(removed)
-            SaveEmails(emails);
-        return removed;
 
-    }
 
 }
