@@ -25,7 +25,7 @@ public abstract class SharedEmailPage : PageModel
         string json = JsonConvert.SerializeObject(email);
         var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-        string URL = isSubbing ? Program.WEATHER_BACKEND_PROVIDER + "/emails/add/" : Program.WEATHER_BACKEND_PROVIDER + "/emails/remove/";
+        string URL = isSubbing ? Program.WEATHER_BACKEND_PROVIDER + "emails/add/" : Program.WEATHER_BACKEND_PROVIDER + "emails/remove/";
 
         using (HttpResponseMessage response = await httpClient.PutAsync(URL, data))
         {

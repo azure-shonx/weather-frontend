@@ -49,7 +49,7 @@ public class IndexModel : PageModel
         WeatherForecast weather;
         using (var httpClient = new HttpClient())
         {
-            using (HttpResponseMessage response = await httpClient.GetAsync(Program.WEATHER_API_PROVIDER + "/" + zipcode))
+            using (HttpResponseMessage response = await httpClient.GetAsync(Program.WEATHER_API_PROVIDER + zipcode))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 weather = JsonConvert.DeserializeObject<WeatherForecast>(apiResponse);
