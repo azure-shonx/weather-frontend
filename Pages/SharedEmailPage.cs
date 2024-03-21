@@ -39,18 +39,10 @@ public abstract class SharedEmailPage : PageModel
 
         using (HttpResponseMessage response = await httpClient.PutAsync(URL, data))
         {
-            var resC = response.Content;
             var statusCode = response.StatusCode;
-
-            if (resC is not null)
-            {
-                _logger.LogInformation((await resC.ReadAsStringAsync()));
-                return false;
-            }
-
-            _logger.LogInformation("Got status code " + statusCode + ".");
             if ((int)statusCode != 200)
             {
+                _logger.LogInformation("Got status code " + statusCode + ".");
                 return false;
             }
         }
