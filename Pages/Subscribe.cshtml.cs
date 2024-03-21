@@ -7,22 +7,21 @@ namespace weather_consumer.Pages;
 
 public class SubscribeModel : SharedEmailPage
 {
-    private readonly ILogger<SubscribeModel> _logger;
-
+    public bool success;
     public string? email;
     public int zipcode;
 
-    public SubscribeModel(ILogger<SubscribeModel> logger)
+    public SubscribeModel(ILogger<SubscribeModel> logger) : base(logger)
     {
-        _logger = logger;
     }
 
     public async void OnPost(string email, int zipcode)
     {
+        success = false;
         if (email is null)
             return;
         this.email = email;
         this.zipcode = zipcode;
-        SaveEmail(new Email(email, zipcode));
+        success = await SaveEmail(new Email(email, zipcode));
     }
 }

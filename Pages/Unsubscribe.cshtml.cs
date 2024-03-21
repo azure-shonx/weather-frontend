@@ -7,22 +7,22 @@ namespace weather_consumer.Pages;
 
 public class UnsubscribeModel : SharedEmailPage
 {
-    private readonly ILogger<UnsubscribeModel> _logger;
+    public bool success;
 
     public string? email;
 
-    public UnsubscribeModel(ILogger<UnsubscribeModel> logger)
+    public UnsubscribeModel(ILogger<UnsubscribeModel> logger) : base(logger)
     {
-        _logger = logger;
     }
 
     public async void OnPost(string? email)
     {
+        success = false;
         if (email is null)
         {
             return;
         }
-        RemoveEmail(new Email(email, 0));
+        success = await RemoveEmail(new Email(email, 0));
     }
 
 
