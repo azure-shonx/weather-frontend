@@ -10,14 +10,20 @@
     <p>Email: </p>
     <input type="email" , id="email" name="email"><br><br>
     <p>Zipcode: </p>
-    <input type="zipcode", id="zipcode" name="zipcode"><br><br>
+    <input type="zipcode" , id="zipcode" name="zipcode"><br><br>
     <input type="submit" , value="Submit">
 </form>
 
 @{
-if(@Model.success) {
-    <p style="color:green;">Registered email @Model.email !</p>
-} else {
-    <p style="color:red;">Failed to register email @Model.email !</p>
-}
+    if (@Model.email is not null)
+    {
+        if (@Model.success)
+        {
+            <p style="color:green;">Registered email @Model.email !</p>
+        }
+        else
+        {
+            <p style="color:red;">Failed to register email @Model.email !</p>
+        }
+    }
 }

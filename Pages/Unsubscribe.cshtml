@@ -12,9 +12,16 @@
 </form>
 
 @{
-if(@Model.success) {
-    <p style="color:green;">Unsubscribed @Model.email !</p>
-} else {
-    <p style="color:red;">Failed to <ul></ul>nsubscribe @Model.email !</p>
-}
+    if (@Model.email is not null)
+    {
+        if (@Model.success)
+        {
+            <p style="color:green;">Unsubscribed @Model.email !</p>
+        }
+        else
+        {
+            <p style="color:red;">Failed to
+            <ul></ul>nsubscribe @Model.email !</p>
+        }
+    }
 }
