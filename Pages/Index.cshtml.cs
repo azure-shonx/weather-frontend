@@ -39,12 +39,11 @@ public class IndexModel : PageModel
     }
     public WeatherForecast GetWeather(int zipcode)
     {
-        return (WeatherForecast)(OnGetWeather(zipcode).Result).Value;
+        return (WeatherForecast)(GetWeather0(zipcode).Result).Value;
     }
 
 
-
-    async Task<JsonResult> OnGetWeather(int zipcode)
+    async Task<JsonResult> GetWeather0(int zipcode)
     {
         WeatherForecast weather;
         using (var httpClient = new HttpClient())
@@ -52,6 +51,8 @@ public class IndexModel : PageModel
             using (HttpResponseMessage response = await httpClient.GetAsync(Program.WEATHER_API_PROVIDER + zipcode))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
+                if (String.IsNullOrEmpty(apiResponse))
+                    throw new NullReferenceException("Provider response is empty. Is it online?");
                 weather = JsonConvert.DeserializeObject<WeatherForecast>(apiResponse);
             }
         }

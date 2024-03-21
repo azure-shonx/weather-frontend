@@ -6,7 +6,7 @@
 <h1> Weather Lookup!</h1>
 
 @{
-    if (Model.Forecast == null)
+    if (Model.Forecast is null)
     {
         <form method="post">
             <label for="zipcode">Zipode:</label>
