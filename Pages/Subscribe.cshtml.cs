@@ -18,8 +18,14 @@ public class SubscribeModel : SharedEmailPage
     public async void OnPost(string email, int zipcode)
     {
         success = false;
-        if (email is null)
+        if (email is null) {
+            _logger.LogInformation("Email is null.");
             return;
+        }
+        if(zipcode <= 0) {
+            _logger.LogInformation("Zipcode is 0 or negative.");
+            return;
+        }
         this.email = email;
         this.zipcode = zipcode;
         success = await SaveEmail(new Email(email, zipcode));
