@@ -32,7 +32,7 @@ public abstract class SharedEmailPage : PageModel
         string json = JsonConvert.SerializeObject(email);
         var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-        _logger.LogInformation("Sending payload of " + data.ToString());
+        _logger.LogInformation("Sending payload of " + await data.ReadAsStringAsync());
         _logger.LogInformation("Raw json is " + json);
 
         string URL = isSubbing ? Program.WEATHER_BACKEND_PROVIDER + "emails/add/" : Program.WEATHER_BACKEND_PROVIDER + "emails/remove/";
@@ -41,14 +41,16 @@ public abstract class SharedEmailPage : PageModel
         {
             var resC = response.Content;
             var statusCode = response.StatusCode;
+
             if (resC is not null)
             {
                 _logger.LogInformation((await resC.ReadAsStringAsync()));
                 return false;
             }
+
+            _logger.LogInformation("Got status code " + statusCode + ".");
             if ((int)statusCode != 200)
             {
-                _logger.LogInformation("Got status code " + statusCode + ".");
                 return false;
             }
         }
