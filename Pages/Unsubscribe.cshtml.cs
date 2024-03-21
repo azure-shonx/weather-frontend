@@ -22,7 +22,7 @@ public class UnsubscribeModel : SharedEmailPage
         {
             return;
         }
-        RemoveEmail(new Email(email));
+        RemoveEmail(new Email(email, 0));
     }
 
 
