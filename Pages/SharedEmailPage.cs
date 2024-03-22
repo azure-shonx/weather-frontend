@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text;
 
 namespace weather_consumer.Pages;
@@ -14,7 +15,6 @@ public abstract class SharedEmailPage : PageModel
 
     public SharedEmailPage(ILogger logger)
     {
-        httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         _logger = logger;
     }
 
@@ -32,11 +32,14 @@ public abstract class SharedEmailPage : PageModel
     private async Task<bool> WriteEmail(Email email, bool isSubbing)
     {
         string json = JsonConvert.SerializeObject(email);
-        var data = new StringContent(json, Encoding.UTF8, "application/json");
+        StringContent data = new StringContent(json, Encoding.UTF8, "application/json");
 
         string URL = isSubbing ? Program.WEATHER_BACKEND_PROVIDER + "emails/add/" : Program.WEATHER_BACKEND_PROVIDER + "emails/remove/";
 
-        using (HttpResponseMessage response = await httpClient.PutAsync(URL, data))
+        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, URL);
+        request.Content = data;
+
+        using (HttpResponseMessage response = await httpClient.SendAsync(request))
         {
             var statusCode = response.StatusCode;
             if ((int)statusCode != 200)
