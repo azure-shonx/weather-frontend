@@ -2,14 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Text;
 
 namespace weather_consumer.Pages;
 
 public abstract class SharedEmailPage : PageModel
 {
-    private static readonly HttpClient httpClient = new HttpClient();
+    private readonly HttpClient httpClient = new HttpClient();
 
     protected readonly ILogger _logger;
 

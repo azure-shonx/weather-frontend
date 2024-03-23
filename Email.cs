@@ -1,5 +1,6 @@
 
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 public class Email
 
@@ -10,12 +11,12 @@ public class Email
             this.email = email;
         this.zipcode = zipcode;
     }
-    public string email { get; }
-    
-    public int zipcode { get; }
+    public string email { set; get; }
+
+    public int zipcode { set; get; }
 
     public override string ToString()
     {
-        return email + zipcode;
+        return JsonConvert.SerializeObject(this);
     }
 }
