@@ -39,25 +39,22 @@ public class IndexModel : PageModel
     }
     public WeatherForecast GetWeather(int zipcode)
     {
-        return (WeatherForecast)(GetWeather0(zipcode).Result).Value;
+        return (WeatherForecast)(GetWeather0(zipcode).Result);
     }
 
 
-    async Task<JsonResult> GetWeather0(int zipcode)
+    async Task<WeatherForecast> GetWeather0(int zipcode)
     {
-        WeatherForecast weather;
         using (var httpClient = new HttpClient())
         {
-            using (HttpResponseMessage response = await httpClient.GetAsync(Program.WEATHER_API_PROVIDER + zipcode))
+            using (HttpResponseMessage response = await httpClient.GetAsync(Program.WEATHER_BACKEND_PROVIDER + "weather/get/" + zipcode))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 if (String.IsNullOrEmpty(apiResponse))
                     throw new NullReferenceException("Provider response is empty. Is it online?");
-                weather = JsonConvert.DeserializeObject<WeatherForecast>(apiResponse);
+                return JsonConvert.DeserializeObject<WeatherForecast>(apiResponse);
             }
         }
-        return new JsonResult(weather);
     }
 
-    public record WeatherForecast(int zipcode, int temperature, string summary, bool isRainy) { }
 }

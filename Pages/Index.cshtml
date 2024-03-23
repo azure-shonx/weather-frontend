@@ -4,7 +4,6 @@
 
 
 <h1> Weather Lookup!</h1>
-<p>Currently running revision @Program.REVISION</p>
 @{
     if (Model.Forecast is null)
     {
@@ -16,6 +15,6 @@
     }
     else
     {
-        <p> The weather is currently: @Model.Forecast.summary</p>
+        <p> The weather is currently: @Model.Forecast.summary, with a temperature of @Model.Forecast.temperature C. </p>
     }
 }
