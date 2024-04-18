@@ -1,14 +1,11 @@
+namespace net.shonx.weather.frontend.web;
+
 public class WebHandler
 {
 
-    private WebApplicationBuilder builder;
-    private WebApplication app;
+    private readonly WebApplicationBuilder builder;
+    private readonly WebApplication app;
     public WebHandler(string[] args)
-    {
-        buildWebApp(args);
-    }
-
-    private void buildWebApp(string[] args)
     {
         builder = WebApplication.CreateBuilder(args);
 
@@ -27,14 +24,13 @@ public class WebHandler
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-
         app.UseRouting();
-
         app.UseAuthorization();
-
         app.MapRazorPages();
+    }
 
+    public void Run()
+    {
         app.Run();
-
     }
 }

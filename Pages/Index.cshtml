@@ -1,4 +1,5 @@
 ﻿@page
+@using net.shonx.weather.frontend.Pages
 @model IndexModel
 
 
@@ -15,6 +16,6 @@
     }
     else
     {
-        <p> The weather is currently: @Model.Forecast.summary, with a temperature of @Model.Forecast.temperature C. </p>
+        <p> The weather is currently: @Model.Forecast.Summary, with a temperature of @Model.Forecast.Temperature C. </p>
     }
 }

@@ -1,21 +1,16 @@
-using Microsoft.AspNetCore.Mvc;
+namespace net.shonx.weather.frontend.Pages;
+
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Newtonsoft.Json;
-using System.Text;
+using net.shonx.weather.backend;
 
-namespace weather_consumer.Pages;
-
-public class SubscribeModel : SharedEmailPage
+public class SubscribeModel(ILogger<SubscribeModel> logger) : PageModel
 {
+    private readonly ILogger<SubscribeModel> _logger = logger;
     public bool success;
     public string? email;
     public int zipcode;
-
-    public SubscribeModel(ILogger<SubscribeModel> logger) : base(logger)
-    {
-    }
-
-    public void OnPost(string email, int zipcode)
+    
+    public async Task OnPost(string email, int zipcode)
     {
         success = false;
         if (email is null)
@@ -28,7 +23,6 @@ public class SubscribeModel : SharedEmailPage
         }
         this.email = email;
         this.zipcode = zipcode;
-        success = SaveEmail(new Email(email, zipcode)).Result;
+        success = await HtmlHandler.WriteEmail(new Email(email, zipcode), true);
     }
-
 }

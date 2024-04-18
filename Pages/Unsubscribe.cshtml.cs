@@ -1,19 +1,13 @@
-using Microsoft.AspNetCore.Mvc;
+namespace net.shonx.weather.frontend.Pages;
+
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Newtonsoft.Json;
-using System.Text;
+using net.shonx.weather.backend;
 
-namespace weather_consumer.Pages;
-
-public class UnsubscribeModel : SharedEmailPage
+public class UnsubscribeModel(ILogger<UnsubscribeModel> logger) : PageModel
 {
+    private readonly ILogger<UnsubscribeModel> _logger = logger;
     public bool success;
-
     public string? email;
-
-    public UnsubscribeModel(ILogger<UnsubscribeModel> logger) : base(logger)
-    {
-    }
 
     public async void OnPost(string? email)
     {
@@ -22,8 +16,6 @@ public class UnsubscribeModel : SharedEmailPage
         {
             return;
         }
-        success = await RemoveEmail(new Email(email, 0));
+        success = await HtmlHandler.WriteEmail(new Email(email, 0), false);
     }
-
-
 }
